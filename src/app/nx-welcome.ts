@@ -429,6 +429,8 @@ import { CommonModule } from '@angular/common';
     <div class="wrapper">
       <div class="container">
         <!--  WELCOME  -->
+          <img alt="cool car" src="https://cdn.pixabay.com/photo/2020/04/19/20/15/mexico-5065439_1280.jpg" />
+
         <div id="welcome">
           <h1>
             <span> Hello there, </span>
@@ -823,6 +825,7 @@ nx run-many -t build test lint</pre>
             </summary>
             <pre>nx graph</pre>
           </details>
+
 
           <details>
             <summary>

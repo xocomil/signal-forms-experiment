@@ -2,3 +2,10 @@
 @plugin "daisyui";
 
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  background-image: url("https://cdn.pixabay.com/photo/2017/05/29/19/13/fire-and-water-2354583_1280.jpg");
+  background-repeat: no-repeat; 
+  background-position: center center; 
+  background-size: cover; 
+}
