@@ -1,2 +1,10 @@
 autoInstallPeers: true
 strictPeerDependencies: false
+onlyBuiltDependencies:
+  - '@swc/core'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - lmdb
+  - msgpackr-extract
+  - nx
+  - oxc-resolver

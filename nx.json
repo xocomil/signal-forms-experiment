@@ -55,5 +55,5 @@
       "unitTestRunner": "vitest"
     }
   },
-  "defaultProject": "signal forms experiment"
+  "defaultProject": "signal-forms-experiment"
 }

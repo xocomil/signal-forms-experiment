@@ -1,5 +1,5 @@
 {
-  "name": "signal forms experiment",
+  "name": "signal-forms-experiment",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "includedScripts": [],
   "projectType": "application",
@@ -11,7 +11,7 @@
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/signal forms experiment",
+        "outputPath": "dist/signal-forms-experiment",
         "browser": "./src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "tsconfig.app.json",
@@ -52,10 +52,10 @@
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "signal forms experiment:build:production"
+          "buildTarget": "signal-forms-experiment:build:production"
         },
         "development": {
-          "buildTarget": "signal forms experiment:build:development"
+          "buildTarget": "signal-forms-experiment:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -63,7 +63,7 @@
     "extract-i18n": {
       "executor": "@angular/build:extract-i18n",
       "options": {
-        "buildTarget": "signal forms experiment:build"
+        "buildTarget": "signal-forms-experiment:build"
       }
     },
     "lint": {
@@ -76,16 +76,16 @@
       "executor": "@nx/vite:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "coverage/signal forms experiment"
+        "reportsDirectory": "coverage/signal-forms-experiment"
       }
     },
     "serve-static": {
       "continuous": true,
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "signal forms experiment:build",
+        "buildTarget": "signal-forms-experiment:build",
         "port": 4200,
-        "staticFilePath": "dist/signal forms experiment/browser",
+        "staticFilePath": "dist/signal-forms-experiment/browser",
         "spa": true
       }
     }
