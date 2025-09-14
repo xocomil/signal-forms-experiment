@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { Todo } from '../components/todo';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [Todo],
   selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  template: `<p>Hey everything still works</p>
+    <app-todo />`,
+  styles: '',
 })
-export class App {
-  protected title = 'signal forms experiment';
-}
+export class App {}
