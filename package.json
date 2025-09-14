@@ -64,6 +64,8 @@
     "nx": "21.5.2",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "prettier-plugin-organize-imports": "^4.2.0",
     "tailwindcss": "4.1.13",
     "tslib": "^2.8.1",
     "typescript": "~5.9.2",
