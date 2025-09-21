@@ -1,37 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  Control,
-  form,
-  max,
-  min,
-  minLength,
-  required,
-  schema,
-} from '@angular/forms/signals';
-
-type TodoModel = {
-  done: boolean;
-  id: number;
-  name: string;
-  description: string;
-};
-
-const todoSchema = schema<TodoModel>((form) => {
-  required(form.id);
-  min(form.id, 0);
-  max(form.id, 999);
-
-  required(form.name, {
-    message: 'Please provide a name for your task.',
-  });
-  minLength(form.name, 3, {
-    message: 'Name must be at least 3 characters long.',
-  });
-
-  required(form.description);
-  minLength(form.description, 10);
-});
+import { Control, form } from '@angular/forms/signals';
+import { TodoModel, todoSchema } from '../models/todo.model';
 
 @Component({
   selector: 'app-todo',
