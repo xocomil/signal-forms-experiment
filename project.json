@@ -13,7 +13,7 @@
       "options": {
         "outputPath": "dist/signal-forms-experiment",
         "browser": "./src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "tsconfig.app.json",
         "assets": [
           {
@@ -76,6 +76,7 @@
       "executor": "@nx/vite:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
+        "polyfills": ["zone.js"],
         "reportsDirectory": "coverage/signal-forms-experiment"
       }
     },

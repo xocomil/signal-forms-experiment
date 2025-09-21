@@ -1,43 +1,13 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  Control,
-  form,
-  max,
-  min,
-  minLength,
-  required,
-  schema,
-} from '@angular/forms/signals';
-
-type TodoModel = {
-  done: boolean;
-  id: number;
-  name: string;
-  description: string;
-};
-
-const todoSchema = schema<TodoModel>((form) => {
-  required(form.id);
-  min(form.id, 0);
-  max(form.id, 999);
-
-  required(form.name, {
-    message: 'Please provide a name for your task.',
-  });
-  minLength(form.name, 3, {
-    message: 'Name must be at least 3 characters long.',
-  });
-
-  required(form.description);
-  minLength(form.description, 10);
-});
+import { Control, form } from '@angular/forms/signals';
+import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
 
 @Component({
   selector: 'app-todo',
   imports: [JsonPipe, Control],
   template: `<pre>{{ model() | json }}</pre>
-    <br />
+    <hr />
     <form class="flex gap-2 items-baseline">
       <input
         class="checkbox checkbox-success"
@@ -49,7 +19,7 @@ const todoSchema = schema<TodoModel>((form) => {
         [class.input-error]="form.id().invalid()"
         [control]="form.id"
         placeholder="id"
-        type="number"
+        type="text"
       />
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Task Name</legend>
@@ -62,7 +32,7 @@ const todoSchema = schema<TodoModel>((form) => {
         />
         @let nameErrors = form.name().errors();
         @for (error of nameErrors; track error) {
-          <p class="label text-error">{{ error.message }}</p>
+          <p class="label text-error">{{ $any(error).issue.message }}</p>
         }
       </fieldset>
       <fieldset class="fieldset">
@@ -75,7 +45,7 @@ const todoSchema = schema<TodoModel>((form) => {
         ></textarea>
         @let descriptionErrors = form.description().errors();
         @for (error of descriptionErrors; track error) {
-          <p class="label text-error">{{ error.message }}</p>
+          <p class="label text-error">{{ $any(error).issue.message }}</p>
         }
       </fieldset>
     </form>`,
@@ -86,12 +56,7 @@ const todoSchema = schema<TodoModel>((form) => {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Todo {
-  protected model = signal<TodoModel>({
-    done: false,
-    name: 'Learn Signal Forms',
-    id: 0,
-    description: 'Learn signal forms on stream and use cool things like zod.',
-  });
+  protected model = signal<TodoModel>(todoFactory());
 
   protected form = form(this.model, todoSchema);
 }
