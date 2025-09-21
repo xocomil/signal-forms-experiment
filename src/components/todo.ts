@@ -1,13 +1,13 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Control, form } from '@angular/forms/signals';
-import { TodoModel, todoSchema } from '../models/todo.model';
+import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
 
 @Component({
   selector: 'app-todo',
   imports: [JsonPipe, Control],
   template: `<pre>{{ model() | json }}</pre>
-    <br />
+    <hr />
     <form class="flex gap-2 items-baseline">
       <input
         class="checkbox checkbox-success"
@@ -19,7 +19,7 @@ import { TodoModel, todoSchema } from '../models/todo.model';
         [class.input-error]="form.id().invalid()"
         [control]="form.id"
         placeholder="id"
-        type="number"
+        type="text"
       />
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Task Name</legend>
@@ -32,7 +32,7 @@ import { TodoModel, todoSchema } from '../models/todo.model';
         />
         @let nameErrors = form.name().errors();
         @for (error of nameErrors; track error) {
-          <p class="label text-error">{{ error.message }}</p>
+          <p class="label text-error">{{ $any(error).issue.message }}</p>
         }
       </fieldset>
       <fieldset class="fieldset">
@@ -45,7 +45,7 @@ import { TodoModel, todoSchema } from '../models/todo.model';
         ></textarea>
         @let descriptionErrors = form.description().errors();
         @for (error of descriptionErrors; track error) {
-          <p class="label text-error">{{ error.message }}</p>
+          <p class="label text-error">{{ $any(error).issue.message }}</p>
         }
       </fieldset>
     </form>`,
@@ -56,12 +56,7 @@ import { TodoModel, todoSchema } from '../models/todo.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Todo {
-  protected model = signal<TodoModel>({
-    done: false,
-    name: 'Learn Signal Forms',
-    id: 0,
-    description: 'Learn signal forms on stream and use cool things like zod.',
-  });
+  protected model = signal<TodoModel>(todoFactory());
 
   protected form = form(this.model, todoSchema);
 }
