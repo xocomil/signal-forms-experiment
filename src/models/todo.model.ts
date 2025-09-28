@@ -3,9 +3,19 @@ import { z } from 'zod';
 
 export const todoParser = z.object({
   done: z.boolean(),
-  id: z.coerce.number().min(0).max(999),
-  name: z.string().min(3),
-  description: z.string().min(10),
+  id: z.coerce
+    .number('Please provide a number for the ID.')
+    .nonnegative('Please provide a positive number for the ID.')
+    .max(999, 'Please provide a number between 0 and 999 for the ID.')
+    .nonoptional('Please provide an ID for your task.'),
+  name: z
+    .string()
+    .nonempty('Please provide a name for your task.')
+    .min(3, 'Please provide a name with at least 3 characters.'),
+  description: z
+    .string()
+    .nonempty('Please provide a description.')
+    .min(10, 'PLease provide a description with at least 10 characters.'),
 });
 
 export type TodoModel = z.infer<typeof todoParser>;
