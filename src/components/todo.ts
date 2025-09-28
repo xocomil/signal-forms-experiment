@@ -1,11 +1,13 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Control, form } from '@angular/forms/signals';
+import { RandomNumber } from '../controls/random-number';
 import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
+import { ZodErrorPipe } from '../pipes/zod-error-pipe';
 
 @Component({
   selector: 'app-todo',
-  imports: [JsonPipe, Control],
+  imports: [JsonPipe, Control, ZodErrorPipe, RandomNumber],
   template: `<pre>{{ model() | json }}</pre>
     <hr />
     <form class="flex gap-2 items-baseline">
@@ -32,7 +34,7 @@ import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
         />
         @let nameErrors = form.name().errors();
         @for (error of nameErrors; track error) {
-          <p class="label text-error">{{ $any(error).issue.message }}</p>
+          <p class="label text-error">{{ error | zodError }}</p>
         }
       </fieldset>
       <fieldset class="fieldset">
@@ -45,9 +47,15 @@ import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
         ></textarea>
         @let descriptionErrors = form.description().errors();
         @for (error of descriptionErrors; track error) {
-          <p class="label text-error">{{ $any(error).issue.message }}</p>
+          <p class="label text-error">{{ error | zodError }}</p>
         }
       </fieldset>
+      <app-random-number
+        [control]="form.randomNumber"
+        [minValue]="1"
+        [maxValue]="20"
+      />
+      <input [control]="form.randomNumber" type="number" />
     </form>`,
   styles: ``,
   host: {
