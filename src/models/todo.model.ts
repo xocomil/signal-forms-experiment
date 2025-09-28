@@ -15,6 +15,7 @@ export const todoParser = z.object({
     .string()
     .nonempty('Please provide a description.')
     .min(10, 'PLease provide a description with at least 10 characters.'),
+  randomNumber: z.coerce.number().nonnegative(),
 });
 
 export type TodoModel = z.infer<typeof todoParser>;
@@ -29,5 +30,6 @@ export function todoFactory(): TodoModel {
     name: 'Learn Signal Forms',
     id: 0,
     description: 'Learn signal forms on stream and use cool things like zod.',
+    randomNumber: 42,
   };
 }
