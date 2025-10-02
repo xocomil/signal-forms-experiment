@@ -154,8 +154,8 @@ importers:
         specifier: ~22.1.0
         version: 22.1.0
       ng-primitives:
-        specifier: 0.81.1
-        version: 0.81.1(3e95e8e12df574e6c593d0682afbbbca)
+        specifier: 0.83.0
+        version: 0.83.0(3e95e8e12df574e6c593d0682afbbbca)
       nx:
         specifier: 21.5.3
         version: 21.5.3(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.2))(@swc/core@1.13.5(@swc/helpers@0.5.17))
@@ -5592,8 +5592,8 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  ng-primitives@0.81.1:
-    resolution: {integrity: sha512-vz9UOU5rqg3SnmY4UpVVVlmfJJjUZd6JAFgCz5WVYwWcl/7u2bcYw3e5/MGKOgLqWTzZFkwZG/uAiVm12iaeTQ==}
+  ng-primitives@0.83.0:
+    resolution: {integrity: sha512-OFgK+BqWEwWiYIpxC4IjjzEH1Re0ZcIlcUSWfO4zJxBCS0lLbNph/mEJf3v8rEVTyIcLvfl7xFZ5TCf3uNvBMA==}
     peerDependencies:
       '@angular/cdk': '>=19.0.0'
       '@angular/common': '>=19.0.0'
@@ -13583,7 +13583,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  ng-primitives@0.81.1(3e95e8e12df574e6c593d0682afbbbca):
+  ng-primitives@0.83.0(3e95e8e12df574e6c593d0682afbbbca):
     dependencies:
       '@angular/cdk': 20.2.5(@angular/common@21.0.0-next.5(@angular/core@21.0.0-next.5(@angular/compiler@21.0.0-next.5)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.5(@angular/compiler@21.0.0-next.5)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 21.0.0-next.5(@angular/core@21.0.0-next.5(@angular/compiler@21.0.0-next.5)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
