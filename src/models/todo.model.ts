@@ -14,7 +14,7 @@ export const todoParser = z.object({
   description: z
     .string()
     .nonempty('Please provide a description.')
-    .min(10, 'PLease provide a description with at least 10 characters.'),
+    .min(10, 'Please provide a description with at least 10 characters.'),
   randomNumber: z.coerce.number().nonnegative(),
 });
 
