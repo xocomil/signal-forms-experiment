@@ -10,9 +10,11 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
   imports: [JsonPipe, Control, ZodErrorPipe, RandomNumber],
   template: `<pre>{{ model() | json }}</pre>
     <hr />
-    <form class="flex gap-2 items-baseline">
+    <form
+      class="grid grid-cols-[30px_90px_minmax(120px,_1fr)_60px_50px] gap-x-2 items-baseline flex-wrap max-w-[75%]"
+    >
       <input
-        class="checkbox checkbox-success"
+        class="checkbox checkbox-success row-span-2"
         [control]="form.done"
         type="checkbox"
       />
@@ -26,7 +28,7 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Task Name</legend>
         <input
-          class="input"
+          class="input w-full"
           [class.input-error]="form.name().invalid()"
           [control]="form.name"
           placeholder="Name your task"
@@ -37,25 +39,26 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
           <p class="label text-error">{{ error | zodError }}</p>
         }
       </fieldset>
-      <fieldset class="fieldset">
+      <app-random-number
+        [control]="form.randomNumber"
+        [minValue]="150"
+        [maxValue]="250"
+      />
+      <input class="input w-20" [control]="form.randomNumber" type="number" />
+      <fieldset class="fieldset col-span-4">
         <legend class="fieldset-legend">Task Description</legend>
-        <textarea
-          class="textarea"
+        <input
+          class="input w-full"
           [class.textarea-error]="form.description().invalid()"
           [control]="form.description"
+          type="text"
           placeholder="Describe your task"
-        ></textarea>
+        />
         @let descriptionErrors = form.description().errors();
         @for (error of descriptionErrors; track error) {
           <p class="label text-error">{{ error | zodError }}</p>
         }
       </fieldset>
-      <app-random-number
-        [control]="form.randomNumber"
-        [minValue]="1"
-        [maxValue]="20"
-      />
-      <input [control]="form.randomNumber" type="number" />
     </form>`,
   styles: ``,
   host: {
