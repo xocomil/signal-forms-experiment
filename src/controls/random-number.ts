@@ -21,7 +21,7 @@ export class RandomNumber implements FormValueControl<number> {
 
   protected handleClick() {
     this.value.set(
-      Math.floor(Math.random() * (this.maxValue() - this.minValue())) +
+      Math.floor(Math.random() * (this.maxValue() - this.minValue() + 1)) +
         this.minValue(),
     );
   }
