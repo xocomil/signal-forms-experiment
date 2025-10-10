@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@angular/cdk':
-        specifier: 20.2.7
-        version: 20.2.7(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
+        specifier: 20.2.8
+        version: 20.2.8(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common':
         specifier: 21.0.0-next.6
         version: 21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
@@ -155,7 +155,7 @@ importers:
         version: 22.1.0
       ng-primitives:
         specifier: 0.83.0
-        version: 0.83.0(3144e9f445b414722e3e41e6943211da)
+        version: 0.83.0(11b5a6ceb31c410ad2ffec0c69858521)
       nx:
         specifier: 21.6.3
         version: 21.6.3(@swc-node/register@1.11.1(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.13.5(@swc/helpers@0.5.17))
@@ -404,8 +404,8 @@ packages:
       vitest:
         optional: true
 
-  '@angular/cdk@20.2.7':
-    resolution: {integrity: sha512-QTqxPJSMXyjaswtpUrziwdoKRhqT2P9/Ascwzjg8T/SofV1850pc3YmonoOFrurYrmd4plZzWdr7raGcBWIh/Q==}
+  '@angular/cdk@20.2.8':
+    resolution: {integrity: sha512-r2GzcgwkRETKUmFhGfmT+T0RYRcYb/JrpADTnUG3sOkHY+05r7YGkmmXMjUIB0nVERqVuFBM1mKVcIFp9SJDmQ==}
     peerDependencies:
       '@angular/common': ^20.0.0 || ^21.0.0
       '@angular/core': ^20.0.0 || ^21.0.0
@@ -7655,7 +7655,7 @@ snapshots:
       - tsx
       - yaml
 
-  '@angular/cdk@20.2.7(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)':
+  '@angular/cdk@20.2.8(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)':
     dependencies:
       '@angular/common': 21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1)
@@ -13322,9 +13322,9 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  ng-primitives@0.83.0(3144e9f445b414722e3e41e6943211da):
+  ng-primitives@0.83.0(11b5a6ceb31c410ad2ffec0c69858521):
     dependencies:
-      '@angular/cdk': 20.2.7(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
+      '@angular/cdk': 20.2.8(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/common': 21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1)
       '@angular/forms': 21.0.0-next.6(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@21.0.0-next.6(@angular/common@21.0.0-next.6(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.6(@angular/compiler@21.0.0-next.6)(rxjs@7.8.2)(zone.js@0.15.1)))(@standard-schema/spec@1.0.0)(rxjs@7.8.2)
