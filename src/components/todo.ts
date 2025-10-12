@@ -4,11 +4,18 @@ import { Control, form } from '@angular/forms/signals';
 import { Input } from '../controls/input';
 import { RandomNumber } from '../controls/random-number';
 import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
-import { ZodErrorPipe } from '../pipes/zod-error-pipe';
+import { ProjectedInput, ProjectedInputStyles } from './projected-input';
 
 @Component({
   selector: 'app-todo',
-  imports: [JsonPipe, Control, ZodErrorPipe, RandomNumber, Input],
+  imports: [
+    JsonPipe,
+    Control,
+    RandomNumber,
+    Input,
+    ProjectedInput,
+    ProjectedInputStyles,
+  ],
   template: `<pre>{{ model() | json }}</pre>
     <hr />
     <form
@@ -26,26 +33,22 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
         placeholder="id"
         type="text"
       />
-      <app-input
-        [control]="form.name"
-        label="Task Name"
-        placeholder="Name your task"
-      />
+      <!--      <app-input-->
+      <!--        [control]="form.name"-->
+      <!--        label="Task Name"-->
+      <!--        placeholder="Name your task"-->
+      <!--      />-->
+      <app-projected-input [errors]="form.name().errors()" label="Task Name">
+        <input
+          [control]="form.name"
+          [class.input-error]="form.name().invalid()"
+          [disabled]="model().done"
+          appDefaultStyle
+          placeholder="Name your task"
+          type="text"
+        />
+      </app-projected-input>
 
-      <!--      <fieldset class="fieldset">-->
-      <!--        <legend class="fieldset-legend">Task Name</legend>-->
-      <!--        <input-->
-      <!--          class="input w-full"-->
-      <!--          [class.input-error]="form.name().invalid()"-->
-      <!--          [control]="form.name"-->
-      <!--          placeholder="Name your task"-->
-      <!--          type="text"-->
-      <!--        />-->
-      <!--        @let nameErrors = form.name().errors();-->
-      <!--        @for (error of nameErrors; track error) {-->
-      <!--          <p class="label text-error">{{ error | zodError }}</p>-->
-      <!--        }-->
-      <!--      </fieldset>-->
       <app-random-number
         [control]="form.randomNumber"
         [minValue]="150"
@@ -58,20 +61,6 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
         label="Description"
         placeholder="Describe your task"
       />
-      <!--      <fieldset class="fieldset col-span-4">-->
-      <!--        <legend class="fieldset-legend">Task Description</legend>-->
-      <!--        <input-->
-      <!--          class="input w-full"-->
-      <!--          [class.textarea-error]="form.description().invalid()"-->
-      <!--          [control]="form.description"-->
-      <!--          type="text"-->
-      <!--          placeholder="Describe your task"-->
-      <!--        />-->
-      <!--        @let descriptionErrors = form.description().errors();-->
-      <!--        @for (error of descriptionErrors; track error) {-->
-      <!--          <p class="label text-error">{{ error | zodError }}</p>-->
-      <!--        }-->
-      <!--      </fieldset>-->
     </form>`,
   styles: ``,
   host: {
