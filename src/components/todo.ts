@@ -4,10 +4,18 @@ import { Control, form } from '@angular/forms/signals';
 import { Input } from '../controls/input';
 import { RandomNumber } from '../controls/random-number';
 import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
+import { ProjectedInput, ProjectedInputStyles } from './projected-input';
 
 @Component({
   selector: 'app-todo',
-  imports: [JsonPipe, Control, RandomNumber, Input],
+  imports: [
+    JsonPipe,
+    Control,
+    RandomNumber,
+    Input,
+    ProjectedInput,
+    ProjectedInputStyles,
+  ],
   template: `<pre>{{ model() | json }}</pre>
     <hr />
     <form
@@ -25,11 +33,21 @@ import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
         placeholder="id"
         type="text"
       />
-      <app-input
-        [control]="form.name"
-        label="Task Name"
-        placeholder="Name your task"
-      />
+      <!--      <app-input-->
+      <!--        [control]="form.name"-->
+      <!--        label="Task Name"-->
+      <!--        placeholder="Name your task"-->
+      <!--      />-->
+      <app-projected-input [errors]="form.name().errors()" label="Task Name">
+        <input
+          [control]="form.name"
+          [class.input-error]="form.name().invalid()"
+          [disabled]="model().done"
+          appDefaultStyle
+          placeholder="Name your task"
+          type="text"
+        />
+      </app-projected-input>
 
       <app-random-number
         [control]="form.randomNumber"
