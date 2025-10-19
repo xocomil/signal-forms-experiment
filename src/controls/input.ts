@@ -4,27 +4,26 @@ import {
   input,
   model,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Control, FieldTree } from '@angular/forms/signals';
+import { Field, FieldTree } from '@angular/forms/signals';
 import { ZodErrorPipe } from '../pipes/zod-error-pipe';
 
 @Component({
   selector: 'app-input',
-  imports: [ZodErrorPipe, FormsModule, Control],
+  imports: [Field, ZodErrorPipe],
   template: `
-    @let control = this.control();
+    @let field = this.field();
 
     <fieldset class="fieldset">
       <legend class="fieldset-legend">{{ label() }}</legend>
       <input
         class="input w-full"
-        [control]="control"
-        [class.input-error]="control().invalid()"
+        [field]="field"
+        [class.input-error]="field().invalid()"
         [placeholder]="placeholder()"
         [disabled]="disabled()"
         type="text"
       />
-      @for (error of control().errors(); track error) {
+      @for (error of field().errors(); track error) {
         <p class="label text-error">{{ error | zodError }}</p>
       }
     </fieldset>
@@ -36,7 +35,7 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Input {
-  control = input.required<FieldTree<string>>();
+  field = input.required<FieldTree<string>>();
 
   label = model<string>('Input Value');
   placeholder = model<string>('Enter a value');

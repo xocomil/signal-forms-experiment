@@ -1,4 +1,9 @@
-import { schema, validateStandardSchema } from '@angular/forms/signals';
+import {
+  max,
+  min,
+  schema,
+  validateStandardSchema,
+} from '@angular/forms/signals';
 import { z } from 'zod';
 
 export const todoParser = z.object({
@@ -15,13 +20,24 @@ export const todoParser = z.object({
     .string()
     .nonempty('Please provide a description.')
     .min(10, 'Please provide a description with at least 10 characters.'),
-  randomNumber: z.coerce.number().nonnegative(),
+  randomNumber: z.coerce
+    .number()
+    .min(42, 'Please provide a number greater than 42.')
+    .max(420, 'Please provide a number less than 420.'),
+  taskImportance: z.coerce
+    .number('Please proved a task importance from 0 to 5.')
+    .int('Please provide an whole number for the task importance.')
+    .min(0, 'Minimum task importance is 0.')
+    .max(5, 'Maximum task importance is 5.'),
 });
 
 export type TodoModel = z.infer<typeof todoParser>;
 
 export const todoSchema = schema<TodoModel>((form) => {
   validateStandardSchema(form, todoParser);
+  // TODO: Can we make a zod binding function that works here?
+  min(form.taskImportance, todoParser.shape.taskImportance.minValue);
+  max(form.taskImportance, todoParser.shape.taskImportance.maxValue);
 });
 
 export function todoFactory(): TodoModel {
@@ -31,5 +47,6 @@ export function todoFactory(): TodoModel {
     id: 0,
     description: 'Learn signal forms on stream and use cool things like zod.',
     randomNumber: 42,
+    taskImportance: 0,
   };
 }
