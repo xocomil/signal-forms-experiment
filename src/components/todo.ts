@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Field, form } from '@angular/forms/signals';
 import { Input } from '../controls/input';
 import { RandomNumber } from '../controls/random-number';
+import { StarInput } from '../controls/star-input';
 import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
 import { ProjectedInput, ProjectedInputStyles } from './projected-input';
 
@@ -15,11 +16,15 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
     ProjectedInput,
     ProjectedInputStyles,
     RandomNumber,
+    StarInput,
   ],
-  template: `<pre>{{ model() | json }}</pre>
+  template: `<pre
+      >{{ model() | json }}
+  {{ form().errorSummary() | json }}</pre
+    >
     <hr />
     <form
-      class="grid grid-cols-[30px_90px_minmax(120px,_1fr)_60px_50px] gap-x-2 items-baseline flex-wrap max-w-[75%]"
+      class="grid grid-cols-[30px_90px_minmax(120px,_1fr)_60px_90px_120px] gap-x-2 items-baseline flex-wrap max-w-[75%]"
     >
       <input
         class="checkbox checkbox-success row-span-2"
@@ -54,9 +59,10 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
         [minValue]="150"
         [maxValue]="250"
       />
-      <input class="input w-20" [field]="form.randomNumber" type="number" />
+      <input class="input w-20" [field]="form.taskImportance" type="number" />
+      <app-star-input [field]="form.taskImportance" />
       <app-input
-        class="col-span-4"
+        class="col-span-5"
         [field]="form.description"
         label="Description"
         placeholder="Describe your task"
