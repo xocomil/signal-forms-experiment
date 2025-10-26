@@ -29,6 +29,7 @@ export const todoParser = z.object({
     .int('Please provide an whole number for the task importance.')
     .min(0, 'Minimum task importance is 0.')
     .max(5, 'Maximum task importance is 5.'),
+  createDate: z.date().nonoptional('Please provide a created date.'),
 });
 
 export type TodoModel = z.infer<typeof todoParser>;
@@ -40,13 +41,24 @@ export const todoSchema = schema<TodoModel>((form) => {
   max(form.taskImportance, todoParser.shape.taskImportance.maxValue);
 });
 
-export function todoFactory(): TodoModel {
+export function todoFactory(opts: Partial<TodoModel> = {}): TodoModel {
+  const {
+    done = false,
+    name = 'Learn Signal Forms',
+    id = 0,
+    description = 'Learn signal forms on stream and use cool things like zod.',
+    randomNumber = 42,
+    taskImportance = 3,
+    createDate = new Date(),
+  } = opts;
+
   return {
-    done: false,
-    name: 'Learn Signal Forms',
-    id: 0,
-    description: 'Learn signal forms on stream and use cool things like zod.',
-    randomNumber: 42,
-    taskImportance: 0,
+    done,
+    name,
+    id,
+    description,
+    randomNumber,
+    taskImportance,
+    createDate,
   };
 }
