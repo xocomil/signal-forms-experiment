@@ -33,9 +33,9 @@ import { FormValueControl } from '@angular/forms/signals';
 })
 export class StarInput implements FormValueControl<number> {
   value = model<number>(0);
-  min = model<number>(1);
-  max = model<number>(2);
-  name = input<string>(Math.floor(Math.random() * 100_000) + '');
+  min = input<number>(1);
+  max = input<number>(2);
+  name = input<string>('');
 
   protected *range() {
     const min = this.min() <= 0 ? 1 : this.min();
