@@ -24,10 +24,17 @@ import { FormValueControl } from '@angular/forms/signals';
         />
       }
     </div>
+    <button
+      class="btn btn-xs btn-ghost hover:bg-error/10"
+      (click)="clearRating()"
+      type="button"
+    >
+      ❌
+    </button>
   `,
   styles: ``,
   host: {
-    class: 'block',
+    class: 'flex flex-row gap-1',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -59,6 +66,10 @@ export class StarInput implements FormValueControl<number> {
 
     return 'bg-success';
   });
+
+  protected clearRating() {
+    this.updateValue(0);
+  }
 
   protected updateValue(value: number) {
     this.value.set(value);
