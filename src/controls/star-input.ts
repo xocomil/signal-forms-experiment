@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  input,
   model,
 } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
@@ -16,9 +17,9 @@ import { FormValueControl } from '@angular/forms/signals';
           class="mask mask-star-2"
           [class]="colorClass()"
           [checked]="value() === i"
-          [name]="i"
           (change)="updateValue(i)"
-          aria-label="{{ i }} star"
+          name="star-input-{{ name() }}"
+          aria-label="{{ i }}-star rating"
           type="radio"
         />
       }
@@ -34,6 +35,7 @@ export class StarInput implements FormValueControl<number> {
   value = model<number>(0);
   min = model<number>(1);
   max = model<number>(2);
+  name = input<string>(Math.floor(Math.random() * 100_000) + '');
 
   protected *range() {
     const min = this.min() <= 0 ? 1 : this.min();
