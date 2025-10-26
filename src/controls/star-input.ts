@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  input,
   model,
 } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
@@ -16,29 +17,37 @@ import { FormValueControl } from '@angular/forms/signals';
           class="mask mask-star-2"
           [class]="colorClass()"
           [checked]="value() === i"
-          [name]="i"
           (change)="updateValue(i)"
-          aria-label="{{ i }} star"
+          name="star-input-{{ name() }}"
+          aria-label="{{ i }}-star rating"
           type="radio"
         />
       }
     </div>
+    <button
+      class="btn btn-xs btn-ghost hover:bg-error/10"
+      (click)="clearRating()"
+      type="button"
+    >
+      ❌
+    </button>
   `,
   styles: ``,
   host: {
-    class: 'block',
+    class: 'flex flex-row gap-1',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StarInput implements FormValueControl<number> {
   value = model<number>(0);
-  min = model<number>(1);
-  max = model<number>(2);
+  min = input<number>(1);
+  max = input<number>(2);
+  name = input<string>('');
 
   protected *range() {
-    const min = this.min() <= 0 ? 1 : this.min();
+    const max = this.max() ? this.max() : 1;
 
-    for (let i = min; i <= this.max(); i++) {
+    for (let i = 1; i <= max; i++) {
       yield i;
     }
   }
@@ -57,6 +66,10 @@ export class StarInput implements FormValueControl<number> {
 
     return 'bg-success';
   });
+
+  protected clearRating() {
+    this.updateValue(this.min());
+  }
 
   protected updateValue(value: number) {
     this.value.set(value);

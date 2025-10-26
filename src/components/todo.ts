@@ -1,10 +1,16 @@
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { Field, form } from '@angular/forms/signals';
 import { Input } from '../controls/input';
 import { RandomNumber } from '../controls/random-number';
 import { StarInput } from '../controls/star-input';
 import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
+import { TodoListStore } from '../stores/todo-list.store';
 import { ProjectedInput, ProjectedInputStyles } from './projected-input';
 
 @Component({
@@ -18,10 +24,15 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
     RandomNumber,
     StarInput,
   ],
-  template: `<pre
-      >{{ model() | json }}
-  {{ form().errorSummary() | json }}</pre
-    >
+  template: `<pre>{{ form().errorSummary() | json }}</pre>
+    <hr />
+    <div>
+      @for (todo of store.todos(); track todo.id) {
+        <pre class="hover:bg-primary/10" (click)="handleTodoClick(todo)">{{
+          todo | json
+        }}</pre>
+      }
+    </div>
     <hr />
     <form
       class="grid grid-cols-[30px_90px_minmax(120px,_1fr)_60px_90px_120px] gap-x-2 items-baseline flex-wrap max-w-[75%]"
@@ -73,9 +84,16 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
     class: 'block ml-2 p-1',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [TodoListStore],
 })
 export class Todo {
+  protected readonly store = inject(TodoListStore);
+
   protected model = signal<TodoModel>(todoFactory());
 
   protected form = form(this.model, todoSchema);
+
+  protected handleTodoClick(todo: TodoModel) {
+    alert(JSON.stringify(todo));
+  }
 }
