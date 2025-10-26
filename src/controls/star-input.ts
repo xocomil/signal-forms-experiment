@@ -45,9 +45,9 @@ export class StarInput implements FormValueControl<number> {
   name = input<string>('');
 
   protected *range() {
-    const min = this.min() <= 0 ? 1 : this.min();
+    const max = this.max() ? this.max() : 1;
 
-    for (let i = min; i <= this.max(); i++) {
+    for (let i = 1; i <= max; i++) {
       yield i;
     }
   }
@@ -68,7 +68,7 @@ export class StarInput implements FormValueControl<number> {
   });
 
   protected clearRating() {
-    this.updateValue(0);
+    this.updateValue(this.min());
   }
 
   protected updateValue(value: number) {
