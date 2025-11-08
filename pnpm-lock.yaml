@@ -58,8 +58,8 @@ importers:
         specifier: 21.0.0-next.9
         version: 21.0.0-next.9(chokidar@4.0.3)
       '@angular/aria':
-        specifier: 21.0.0-next.10
-        version: 21.0.0-next.10(@angular/cdk@21.0.0-next.10(@angular/common@21.0.0-next.9(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))
+        specifier: 21.0.0-rc.1
+        version: 21.0.0-rc.1(@angular/cdk@21.0.0-next.10(@angular/common@21.0.0-next.9(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))
       '@angular/build':
         specifier: 21.0.0-next.9
         version: 21.0.0-next.9(@angular/compiler-cli@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(typescript@5.9.3))(@angular/compiler@21.0.0-next.9)(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@21.0.0-next.9(@angular/common@21.0.0-next.9(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1)))(@types/node@24.9.1)(chokidar@4.0.3)(jiti@2.6.1)(less@4.4.1)(lightningcss@1.30.2)(postcss@8.5.6)(sass-embedded@1.92.1)(tailwindcss@4.1.16)(terser@5.44.0)(tslib@2.8.1)(typescript@5.9.3)(vitest@3.2.4)(yaml@2.8.1)
@@ -361,10 +361,10 @@ packages:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '*'
 
-  '@angular/aria@21.0.0-next.10':
-    resolution: {integrity: sha512-yLB9Ydi7N4K6KKcieSirm3YN46EpNXv+6b5gx+W272EZDtKqsS14sC/nhfpLSJ+siVG+HKaczES+0/jp3zqjew==}
+  '@angular/aria@21.0.0-rc.1':
+    resolution: {integrity: sha512-nu3JHNfcilqMj2VuNHrylScTPwqdnZubd9hv/EY6sH5yRTxxDlidGGGmihYTX1mpyMGtRzSv3vZJtF+k7mCNNQ==}
     peerDependencies:
-      '@angular/cdk': 21.0.0-next.10
+      '@angular/cdk': 21.0.0-rc.1
       '@angular/core': ^21.0.0-0 || ^21.1.0-0 || ^21.2.0-0 || ^21.3.0-0 || ^22.0.0-0
 
   '@angular/build@21.0.0-next.9':
@@ -5000,6 +5000,7 @@ packages:
   keygrip@1.1.0:
     resolution: {integrity: sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==}
     engines: {node: '>= 0.6'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -7597,7 +7598,7 @@ snapshots:
       eslint: 9.38.0(jiti@2.6.1)
       typescript: 5.9.3
 
-  '@angular/aria@21.0.0-next.10(@angular/cdk@21.0.0-next.10(@angular/common@21.0.0-next.9(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))':
+  '@angular/aria@21.0.0-rc.1(@angular/cdk@21.0.0-next.10(@angular/common@21.0.0-next.9(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))':
     dependencies:
       '@angular/cdk': 21.0.0-next.10(@angular/common@21.0.0-next.9(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 21.0.0-next.9(@angular/compiler@21.0.0-next.9)(rxjs@7.8.2)(zone.js@0.15.1)
