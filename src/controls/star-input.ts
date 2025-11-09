@@ -17,6 +17,7 @@ import { FormValueControl } from '@angular/forms/signals';
           class="mask mask-star-2"
           [class]="colorClass()"
           [checked]="value() === i"
+          [disabled]="disabled()"
           (change)="updateValue(i)"
           name="star-input-{{ name() }}"
           aria-label="{{ i }}-star rating"
@@ -26,6 +27,7 @@ import { FormValueControl } from '@angular/forms/signals';
     </div>
     <button
       class="btn btn-xs btn-ghost hover:bg-error/10"
+      [disabled]="disabled()"
       (click)="clearRating()"
       type="button"
     >
@@ -39,10 +41,11 @@ import { FormValueControl } from '@angular/forms/signals';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StarInput implements FormValueControl<number> {
-  value = model<number>(0);
-  min = input<number>(1);
-  max = input<number>(2);
-  name = input<string>('');
+  value = model(0);
+  min = input(1);
+  max = input(2);
+  name = input('');
+  disabled = input(false);
 
   protected *range() {
     const max = this.max() ? this.max() : 1;
