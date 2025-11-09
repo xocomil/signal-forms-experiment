@@ -20,7 +20,6 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
         [field]="field"
         [class.input-error]="field().invalid()"
         [placeholder]="placeholder()"
-        [disabled]="disabled()"
         type="text"
       />
       @for (error of field().errors(); track error) {
@@ -39,5 +38,5 @@ export class Input {
 
   label = model<string>('Input Value');
   placeholder = model<string>('Enter a value');
-  disabled = model(false);
+  // disabled = model(false);
 }
