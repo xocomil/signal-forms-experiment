@@ -1,4 +1,5 @@
 import {
+  disabled,
   max,
   min,
   schema,
@@ -39,6 +40,21 @@ export const todoSchema = schema<TodoModel>((form) => {
   // TODO: Can we make a zod binding function that works here?
   min(form.taskImportance, todoParser.shape.taskImportance.minValue);
   max(form.taskImportance, todoParser.shape.taskImportance.maxValue);
+
+  // disabled(form.id, ({ valueOf }) => valueOf(form.done));
+  // disabled(form.description, ({ valueOf }) => valueOf(form.done));
+  // disabled(form.randomNumber, ({ valueOf }) => valueOf(form.done));
+  const fields: Array<any> = [
+    form.id,
+    form.description,
+    form.randomNumber,
+    form.name,
+    form.taskImportance,
+  ];
+
+  for (const field of fields) {
+    disabled(field, ({ valueOf }) => valueOf(form.done));
+  }
 });
 
 export function todoFactory(opts: Partial<TodoModel> = {}): TodoModel {

@@ -47,7 +47,7 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
         [class.input-error]="form.id().invalid()"
         [field]="form.id"
         placeholder="id"
-        type="text"
+        type="number"
       />
       <!--      <app-input-->
       <!--        [field]="form.name"-->
@@ -58,7 +58,6 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
         <input
           [field]="form.name"
           [class.input-error]="form.name().invalid()"
-          [disabled]="model().done"
           appDefaultStyle
           placeholder="Name your task"
           type="text"
