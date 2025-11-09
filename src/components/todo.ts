@@ -47,7 +47,7 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
         [class.input-error]="form.id().invalid()"
         [field]="form.id"
         placeholder="id"
-        type="text"
+        type="number"
       />
       <!--      <app-input-->
       <!--        [field]="form.name"-->
