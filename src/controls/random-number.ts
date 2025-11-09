@@ -1,11 +1,21 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  model,
+} from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-random-number',
   imports: [],
   template: `
-    <button class="btn btn-primary" (click)="handleClick()" type="button">
+    <button
+      class="btn btn-primary"
+      [disabled]="disabled()"
+      (click)="handleClick()"
+      type="button"
+    >
       {{ value() }}
     </button>
   `,
@@ -16,8 +26,9 @@ import { FormValueControl } from '@angular/forms/signals';
 })
 export class RandomNumber implements FormValueControl<number> {
   value = model<number>();
-  minValue = model.required<number>();
-  maxValue = model.required<number>();
+  minValue = input.required<number>();
+  maxValue = input.required<number>();
+  disabled = input(false);
 
   protected handleClick() {
     this.value.set(
