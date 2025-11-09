@@ -46,7 +46,7 @@
     "@playwright/test": "^1.56.1",
     "@schematics/angular": "21.0.0-next.9",
     "@swc-node/register": "~1.11.1",
-    "@swc/core": "~1.13.5",
+    "@swc/core": "~1.15.0",
     "@swc/helpers": "~0.5.17",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/node": "24.9.1",
