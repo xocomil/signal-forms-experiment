@@ -15,8 +15,13 @@ import { TodoForm } from './todo-form';
       }
     </div>
     <hr />
-    @defer {
-      <app-todo-form />
+    @if (store.todoSelected()) {
+      @defer {
+        <app-todo-form
+          [selectedTodo]="store.todoSelected()"
+          (editCancelled)="handleCancelled()"
+        />
+      }
     }`,
   styles: ``,
   host: {
@@ -29,6 +34,10 @@ export class Todo {
   protected readonly store = inject(TodoListStore);
 
   protected handleTodoClick(todo: TodoModel) {
-    alert(JSON.stringify(todo));
+    this.store.selectTodo(todo);
+  }
+
+  protected handleCancelled() {
+    this.store.deselectTodo();
   }
 }

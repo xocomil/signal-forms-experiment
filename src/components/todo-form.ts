@@ -1,5 +1,12 @@
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  model,
+  output,
+  signal,
+} from '@angular/core';
 import { Field, form } from '@angular/forms/signals';
 import { Input } from '../controls/input';
 import { RandomNumber } from '../controls/random-number';
@@ -62,6 +69,7 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
         label="Description"
         placeholder="Describe your task"
       />
+      <button class="btn" (click)="cancel()" type="button">Cancel</button>
     </form>
     <hr />
     <pre>{{ form().errorSummary() | json }}</pre>
@@ -70,7 +78,24 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoForm {
+  selectedTodo = model<TodoModel>();
+  editCancelled = output();
+
   protected model = signal<TodoModel>(todoFactory());
 
   protected form = form(this.model, todoSchema);
+
+  constructor() {
+    effect(() => {
+      const currentTodo = this.selectedTodo();
+
+      console.log('currentTodo', currentTodo);
+
+      this.model.set(currentTodo ?? todoFactory());
+    });
+  }
+
+  protected cancel() {
+    this.editCancelled.emit();
+  }
 }
