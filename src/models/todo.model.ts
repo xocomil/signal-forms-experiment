@@ -3,6 +3,7 @@ import {
   max,
   min,
   schema,
+  SchemaPath,
   validateStandardSchema,
 } from '@angular/forms/signals';
 import { z } from 'zod';
@@ -41,10 +42,7 @@ export const todoSchema = schema<TodoModel>((form) => {
   min(form.taskImportance, todoParser.shape.taskImportance.minValue);
   max(form.taskImportance, todoParser.shape.taskImportance.maxValue);
 
-  // disabled(form.id, ({ valueOf }) => valueOf(form.done));
-  // disabled(form.description, ({ valueOf }) => valueOf(form.done));
-  // disabled(form.randomNumber, ({ valueOf }) => valueOf(form.done));
-  const fields: Array<any> = [
+  const fields: SchemaPath<unknown>[] = [
     form.id,
     form.description,
     form.randomNumber,

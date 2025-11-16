@@ -11,7 +11,7 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
   selector: 'app-input',
   imports: [Field, ZodErrorPipe],
   template: `
-    @let field = this.field();
+    @let field = this.fieldTree();
 
     <fieldset class="fieldset">
       <legend class="fieldset-legend">{{ label() }}</legend>
@@ -34,9 +34,8 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Input {
-  field = input.required<FieldTree<string>>();
+  fieldTree = input.required<FieldTree<string>>();
 
   label = model<string>('Input Value');
   placeholder = model<string>('Enter a value');
-  // disabled = model(false);
 }
