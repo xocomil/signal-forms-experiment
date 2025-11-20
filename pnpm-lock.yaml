@@ -61,8 +61,8 @@ importers:
         specifier: 21.0.0-rc.4
         version: 21.0.0-rc.4(chokidar@4.0.3)
       '@angular/aria':
-        specifier: 21.0.0-rc.2
-        version: 21.0.0-rc.2(@angular/cdk@21.0.0-rc.2(@angular/common@21.0.0-rc.2(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))
+        specifier: 21.0.0
+        version: 21.0.0(@angular/cdk@21.0.0-rc.2(@angular/common@21.0.0-rc.2(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))
       '@angular/build':
         specifier: 21.0.0-rc.4
         version: 21.0.0-rc.4(@angular/compiler-cli@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(typescript@5.9.3))(@angular/compiler@21.0.0-rc.2)(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@21.0.0-rc.2(@angular/common@21.0.0-rc.2(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1)))(@types/node@24.10.1)(chokidar@4.0.3)(jiti@2.6.1)(less@4.4.1)(lightningcss@1.30.2)(postcss@8.5.6)(sass-embedded@1.92.1)(tailwindcss@4.1.17)(terser@5.44.0)(tslib@2.8.1)(typescript@5.9.3)(vitest@3.2.4)(yaml@2.8.1)
@@ -376,11 +376,11 @@ packages:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '*'
 
-  '@angular/aria@21.0.0-rc.2':
-    resolution: {integrity: sha512-JXGSeiNfvONDjSll25CNtJG1LNrlNhlfMau474qh6zV94iOin3DlzKDIdul3osH9o9M/shaFss9IypeTzk+nLA==}
+  '@angular/aria@21.0.0':
+    resolution: {integrity: sha512-hBvktVX5znGjdv7uxq94oyJ13GK0qDT6Ap+2MrCMojVn+BuOAg6qOgemVgzWC9fCH7szvFTzZsqm/YS0Zm5Jfg==}
     peerDependencies:
-      '@angular/cdk': 21.0.0-rc.2
-      '@angular/core': ^21.0.0-0 || ^21.1.0-0 || ^21.2.0-0 || ^21.3.0-0 || ^22.0.0-0
+      '@angular/cdk': 21.0.0
+      '@angular/core': ^21.0.0 || ^22.0.0
 
   '@angular/build@21.0.0-rc.4':
     resolution: {integrity: sha512-yAy9HCi8sNo7oACSFyRfEHOLLMDR8rNPmDPxchcQFwND1dC4WUBA+bhFdsJmISO4g1Deh82ALX29n/AKVPtJSQ==}
@@ -7683,7 +7683,7 @@ snapshots:
       eslint: 9.39.1(jiti@2.6.1)
       typescript: 5.9.3
 
-  '@angular/aria@21.0.0-rc.2(@angular/cdk@21.0.0-rc.2(@angular/common@21.0.0-rc.2(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))':
+  '@angular/aria@21.0.0(@angular/cdk@21.0.0-rc.2(@angular/common@21.0.0-rc.2(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))':
     dependencies:
       '@angular/cdk': 21.0.0-rc.2(@angular/common@21.0.0-rc.2(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 21.0.0-rc.2(@angular/compiler@21.0.0-rc.2)(rxjs@7.8.2)(zone.js@0.15.1)
