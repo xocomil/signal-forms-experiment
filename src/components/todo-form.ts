@@ -2,16 +2,15 @@ import { JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
-  model,
-  output,
-  signal,
+  inject,
+  linkedSignal,
 } from '@angular/core';
 import { Field, form } from '@angular/forms/signals';
 import { Input } from '../controls/input';
 import { RandomNumber } from '../controls/random-number';
 import { StarInput } from '../controls/star-input';
-import { todoFactory, TodoModel, todoSchema } from '../models/todo.model';
+import { TodoModel, todoSchema } from '../models/todo.model';
+import { TodoListStore } from '../stores/todo-list.store';
 import { ProjectedInput, ProjectedInputStyles } from './projected-input';
 
 @Component({
@@ -69,8 +68,11 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
         label="Description"
         placeholder="Describe your task"
       />
-      <div class="col-span-6 flex justify-end">
+      <div class="col-span-6 flex justify-end gap-4">
         <button class="btn" (click)="cancel()" type="button">Cancel</button>
+        <button class="btn btn-success" (click)="save()" type="button">
+          Save
+        </button>
       </div>
     </form>
     <hr />
@@ -80,24 +82,19 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoForm {
-  selectedTodo = model<TodoModel>();
-  editCancelled = output();
+  readonly #todoStore = inject(TodoListStore);
 
-  protected model = signal<TodoModel>(todoFactory());
+  protected model = linkedSignal<TodoModel>(this.#todoStore.selectedTodo);
 
   protected form = form(this.model, todoSchema);
 
-  constructor() {
-    effect(() => {
-      const currentTodo = this.selectedTodo();
-
-      console.log('currentTodo', currentTodo);
-
-      this.model.set(currentTodo ?? todoFactory());
-    });
+  protected cancel() {
+    this.#todoStore.deselectTodo();
   }
 
-  protected cancel() {
-    this.editCancelled.emit();
+  protected save() {
+    console.log('saving', this.model());
+
+    this.#todoStore.saveTodo(this.model());
   }
 }

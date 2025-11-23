@@ -17,10 +17,7 @@ import { TodoForm } from './todo-form';
     <hr />
     @if (store.todoSelected()) {
       @defer {
-        <app-todo-form
-          [selectedTodo]="store.todoSelected()"
-          (editCancelled)="handleCancelled()"
-        />
+        <app-todo-form />
       }
     }`,
   styles: ``,
@@ -35,9 +32,5 @@ export class Todo {
 
   protected handleTodoClick(todo: TodoModel) {
     this.store.selectTodo(todo);
-  }
-
-  protected handleCancelled() {
-    this.store.deselectTodo();
   }
 }

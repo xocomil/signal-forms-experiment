@@ -38,6 +38,9 @@ importers:
       '@ngrx/signals':
         specifier: ^20.1.0
         version: 20.1.0(@angular/core@21.0.0(@angular/compiler@21.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
+      mutative:
+        specifier: ^1.3.0
+        version: 1.3.0
       rxjs:
         specifier: ~7.8.2
         version: 7.8.2
@@ -5486,6 +5489,10 @@ packages:
   multicast-dns@7.2.5:
     resolution: {integrity: sha512-2eznPJP8z2BFLX50tf0LuODrpINqP1RVIm/CObbTcBRITQgmC/TjcREF1NeTBzIcR5XO/ukWo+YHOjBbFwIupg==}
     hasBin: true
+
+  mutative@1.3.0:
+    resolution: {integrity: sha512-8MJj6URmOZAV70dpFe1YnSppRTKC4DsMkXQiBDFayLcDI4ljGokHxmpqaBQuDWa4iAxWaJJ1PS8vAmbntjjKmQ==}
+    engines: {node: '>=14.0'}
 
   mute-stream@2.0.0:
     resolution: {integrity: sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA==}
@@ -13331,6 +13338,8 @@ snapshots:
     dependencies:
       dns-packet: 5.6.1
       thunky: 1.1.0
+
+  mutative@1.3.0: {}
 
   mute-stream@2.0.0: {}
 
