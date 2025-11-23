@@ -6,8 +6,9 @@ import {
   withComputed,
   withMethods,
 } from '@ngrx/signals';
+import { create } from 'mutative';
 import { todoListFactory } from '../models/todo-list.model';
-import { TodoModel } from '../models/todo.model';
+import { NonEditableKeys, TodoModel } from '../models/todo.model';
 
 type SelectedState = {
   selectedTodo: TodoModel | undefined;
@@ -16,15 +17,59 @@ type SelectedState = {
 export const TodoListStore = signalStore(
   withImmutableState(todoListFactory()),
   withImmutableState<SelectedState>({ selectedTodo: undefined }),
-  withComputed((state) => ({
-    todoSelected: computed(() => state.selectedTodo()),
+  withComputed((store) => ({
+    todoSelected: computed(() => store.selectedTodo()),
   })),
-  withMethods((state) => ({
+  withMethods((store) => ({
     selectTodo(todo: TodoModel) {
-      patchState(state, { selectedTodo: todo });
+      patchState(store, { selectedTodo: todo });
     },
     deselectTodo() {
-      patchState(state, { selectedTodo: undefined });
+      patchState(store, { selectedTodo: undefined });
+    },
+  })),
+  withMethods((store) => ({
+    saveTodo(todo: TodoModel) {
+      const delta = createDelta(store.selectedTodo(), todo);
+
+      console.log('[saveTodo] delta', delta);
+
+      patchState(store, (state) =>
+        create(state, (draft) => {
+          const index = state.todos.findIndex(
+            (todo) => todo.id === draft.selectedTodo?.id,
+          );
+
+          draft.todos[index] = { ...draft.todos[index], ...delta };
+        }),
+      );
+
+      store.deselectTodo();
     },
   })),
 );
+
+function createDelta(
+  currentTodo: TodoModel,
+  newTodo: TodoModel,
+): Partial<TodoModel> {
+  // Example of using reduce
+  // const delta = Object.entries(newTodo).reduce((acc, [key, value]) => {
+  //   return currentTodo[key] !== value ? { ...acc, [key]: value } : acc;
+  // }, {} as Partial<TodoModel>);
+  //
+  // console.log('delta', delta);
+
+  // Example of not using reduce
+  const delta2 = Object.entries(newTodo).filter(([key, value]) => {
+    if (NonEditableKeys.includes(key as NonEditableKeys)) return false;
+
+    return currentTodo[key] !== value;
+  });
+
+  console.log('delta2', Object.fromEntries(delta2));
+
+  return Object.fromEntries(delta2);
+
+  // return delta;
+}

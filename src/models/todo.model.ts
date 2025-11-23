@@ -36,14 +36,19 @@ export const todoParser = z.object({
 
 export type TodoModel = z.infer<typeof todoParser>;
 
+export type NonEditableKeys = keyof TodoModel;
+
+export const NonEditableKeys: NonEditableKeys[] = ['id'] as const;
+
 export const todoSchema = schema<TodoModel>((form) => {
   validateStandardSchema(form, todoParser);
   // TODO: Can we make a zod binding function that works here?
   min(form.taskImportance, todoParser.shape.taskImportance.minValue);
   max(form.taskImportance, todoParser.shape.taskImportance.maxValue);
 
+  disabled(form.id);
+
   const fields: SchemaPath<unknown>[] = [
-    form.id,
     form.description,
     form.randomNumber,
     form.name,

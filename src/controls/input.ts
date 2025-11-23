@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  model,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Field, FieldTree } from '@angular/forms/signals';
 import { ZodErrorPipe } from '../pipes/zod-error-pipe';
 
@@ -11,7 +6,7 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
   selector: 'app-input',
   imports: [Field, ZodErrorPipe],
   template: `
-    @let field = this.fieldTree();
+    @let field = this.field();
 
     <fieldset class="fieldset">
       <legend class="fieldset-legend">{{ label() }}</legend>
@@ -34,8 +29,8 @@ import { ZodErrorPipe } from '../pipes/zod-error-pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Input {
-  fieldTree = input.required<FieldTree<string>>();
+  readonly field = input.required<FieldTree<string>>();
 
-  label = model<string>('Input Value');
-  placeholder = model<string>('Enter a value');
+  readonly label = input<string>('Input Value');
+  readonly placeholder = input<string>('Enter a value');
 }
