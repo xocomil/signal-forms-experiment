@@ -65,11 +65,13 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
       <app-star-input [field]="form.taskImportance" />
       <app-input
         class="col-span-5"
-        [fieldTree]="form.description"
+        [field]="form.description"
         label="Description"
         placeholder="Describe your task"
       />
-      <button class="btn" (click)="cancel()" type="button">Cancel</button>
+      <div class="col-span-6 flex justify-end">
+        <button class="btn" (click)="cancel()" type="button">Cancel</button>
+      </div>
     </form>
     <hr />
     <pre>{{ form().errorSummary() | json }}</pre>
