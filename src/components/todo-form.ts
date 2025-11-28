@@ -93,8 +93,6 @@ export class TodoForm {
   }
 
   protected save() {
-    console.log('saving', this.model());
-
     this.#todoStore.saveTodo(this.model());
   }
 }
