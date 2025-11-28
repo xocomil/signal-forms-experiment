@@ -36,9 +36,9 @@ export const todoParser = z.object({
 
 export type TodoModel = z.infer<typeof todoParser>;
 
-export type NonEditableKeys = keyof TodoModel;
+export type TodoModelKeys = keyof TodoModel;
 
-export const NonEditableKeys: NonEditableKeys[] = ['id'] as const;
+export const NonEditableKeys: TodoModelKeys[] = ['id'] as const;
 
 export const todoSchema = schema<TodoModel>((form) => {
   validateStandardSchema(form, todoParser);
