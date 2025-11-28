@@ -8,7 +8,11 @@ import {
 } from '@ngrx/signals';
 import { create } from 'mutative';
 import { todoListFactory } from '../models/todo-list.model';
-import { NonEditableKeys, TodoModel } from '../models/todo.model';
+import {
+  NonEditableKeys,
+  TodoModel,
+  TodoModelKeys,
+} from '../models/todo.model';
 
 type SelectedState = {
   selectedTodo: TodoModel | undefined;
@@ -16,7 +20,9 @@ type SelectedState = {
 
 export const TodoListStore = signalStore(
   withImmutableState(todoListFactory()),
-  withImmutableState<SelectedState>({ selectedTodo: undefined }),
+  withImmutableState<SelectedState>({
+    selectedTodo: undefined,
+  }),
   withComputed((store) => ({
     todoSelected: computed(() => store.selectedTodo()),
   })),
@@ -62,7 +68,7 @@ function createDelta(
 
   // Example of not using reduce
   const delta2 = Object.entries(newTodo).filter(([key, value]) => {
-    if (NonEditableKeys.includes(key as NonEditableKeys)) return false;
+    if (NonEditableKeys.includes(key as TodoModelKeys)) return false;
 
     return currentTodo[key] !== value;
   });
