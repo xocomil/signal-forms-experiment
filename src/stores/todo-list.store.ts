@@ -35,6 +35,23 @@ export const TodoListStore = signalStore(
     },
   })),
   withMethods((store) => ({
+    toggleTodo(todoToToggle: TodoModel) {
+      store.deselectTodo();
+
+      console.log('[toggleTodo] todo', todoToToggle);
+
+      patchState(store, (state) =>
+        create(state, (draft) => {
+          const index = state.todos.findIndex(
+            (todo) => todo.id === todoToToggle.id,
+          );
+
+          console.log('[toggleTodo] index', index, draft.todos[index]);
+
+          draft.todos[index].done = !todoToToggle.done;
+        }),
+      );
+    },
     saveTodo(todo: TodoModel) {
       const delta = createDelta(store.selectedTodo(), todo);
 

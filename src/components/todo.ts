@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Signal,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import {
   Column,
   ColumnDef,
@@ -6,46 +14,52 @@ import {
   FlexRenderDirective,
   getCoreRowModel,
   getSortedRowModel,
+  HeaderContext,
 } from '@tanstack/angular-table';
 import { TodoModel } from '../models/todo.model';
 import { TodoListStore } from '../stores/todo-list.store';
 import { TodoForm } from './todo-form';
 
-const defaultColumns: ColumnDef<TodoModel>[] = [
-  {
-    accessorKey: 'done',
-    header: () => 'Done',
-    footer: (info) => info.column.id,
-    sortingFn: 'basic',
-  },
-  {
-    accessorKey: 'name',
-    header: () => 'Task Name',
-    footer: (info) => info.column.id,
-    sortingFn: 'basic',
-  },
-  {
-    accessorKey: 'description',
-    header: () => 'Description',
-    footer: (info) => info.column.id,
-    sortingFn: 'basic',
-  },
-  {
-    accessorKey: 'taskImportance',
-    header: 'Importance',
-    footer: (info) => info.column.id,
-    sortingFn: 'basic',
-  },
-  {
-    accessorKey: 'randomNumber',
-    header: 'Random',
-    sortingFn: 'basic',
-  },
-] as const;
+const defaultColumns = (
+  taskCellTemplate: Signal<TemplateRef<any>>,
+): ColumnDef<TodoModel>[] =>
+  [
+    {
+      accessorKey: 'done',
+      header: 'Done',
+      sortingFn: 'basic',
+      cell: () => taskCellTemplate(),
+    },
+    {
+      header: 'Task',
+      accessorFn: ({ name, description }) => ({ name, description }),
+      cell: (task) => {
+        const currentTask = task.getValue();
+
+        if (!isTaskDescription(currentTask)) {
+          return `<i class="text-sm text-neutral-500">No Task Found!</i>`;
+        }
+
+        return `<b>${currentTask.name}</b><br>
+<i class="text-sm text-neutral-500">${currentTask.description}</i>`;
+      },
+      enableSorting: false,
+    },
+    {
+      accessorKey: 'taskImportance',
+      header: 'Importance',
+      sortingFn: 'basic',
+    },
+    {
+      accessorKey: 'randomNumber',
+      header: 'Random',
+      sortingFn: 'basic',
+    },
+  ] as const;
 
 @Component({
   selector: 'app-todo',
-  imports: [FlexRenderDirective, TodoForm],
+  imports: [FlexRenderDirective, TodoForm, JsonPipe],
   template: ` <div>
       <table class="table table-zebra table-pin-rows">
         <thead>
@@ -53,20 +67,34 @@ const defaultColumns: ColumnDef<TodoModel>[] = [
             <tr>
               @for (header of headerGroup.headers; track header.id) {
                 @if (!header.isPlaceholder) {
-                  <th
-                    class="cursor-pointer hover:bg-accent/10 transition-all duration-500 ease-in-out"
-                    (click)="sortBy(header.column)"
-                  >
-                    <ng-container
-                      *flexRender="
-                        header.column.columnDef.header;
-                        props: header.getContext();
-                        let header
-                      "
+                  @if (header.column.getCanSort()) {
+                    <th
+                      class="cursor-pointer hover:bg-accent/10 transition-all duration-500 ease-in-out"
+                      (click)="sortBy(header.column)"
                     >
-                      <div [innerHTML]="header"></div>
-                    </ng-container>
-                  </th>
+                      <ng-container
+                        *flexRender="
+                          header.column.columnDef.header;
+                          props: header.getContext();
+                          let header
+                        "
+                      >
+                        <div [innerHTML]="header"></div>
+                      </ng-container>
+                    </th>
+                  } @else {
+                    <th>
+                      <ng-container
+                        *flexRender="
+                          header.column.columnDef.header;
+                          props: header.getContext();
+                          let header
+                        "
+                      >
+                        <div [innerHTML]="header"></div>
+                      </ng-container>
+                    </th>
+                  }
                 }
               }
             </tr>
@@ -101,7 +129,16 @@ const defaultColumns: ColumnDef<TodoModel>[] = [
       @defer {
         <app-todo-form />
       }
-    }`,
+    }
+    <ng-template #taskCheckbox let-context>
+      <input
+        class="checkbox checkbox-success"
+        [checked]="context.getValue()"
+        (change)="changeChecked(context.row.original)"
+        (click)="$event.stopPropagation()"
+        type="checkbox"
+      />
+    </ng-template>`,
   styles: ``,
   host: {
     class: 'block ml-2 p-1',
@@ -112,9 +149,14 @@ const defaultColumns: ColumnDef<TodoModel>[] = [
 export class Todo {
   protected readonly store = inject(TodoListStore);
 
+  protected readonly taskCheckbox =
+    viewChild.required<TemplateRef<{ $implicit: HeaderContext<any, any> }>>(
+      'taskCheckbox',
+    );
+
   protected readonly table = createAngularTable(() => ({
     data: this.store.todos(),
-    columns: defaultColumns,
+    columns: defaultColumns(this.taskCheckbox),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
@@ -129,4 +171,25 @@ export class Todo {
 
     console.log('sorting by', column.id, this.table.getState().sorting);
   }
+
+  // From Oleh
+  // https://stackblitz.com/github/tanstack/table/tree/main/examples/angular/editable?embed=1&theme=light&preset=node&file=src/app/app.component.ts
+  // https://tanstack.com/table/v8/docs/framework/angular/examples/editable?panel=sandbox
+
+  protected changeChecked(currentTodo: TodoModel) {
+    console.log('changeChecked', currentTodo);
+
+    this.store.toggleTodo(currentTodo);
+  }
+}
+
+function isTaskDescription(
+  value: unknown,
+): value is { name: string; description: string } {
+  return (
+    typeof value === 'object' &&
+    value != null &&
+    Object.hasOwn(value, 'name') &&
+    Object.hasOwn(value, 'description')
+  );
 }
