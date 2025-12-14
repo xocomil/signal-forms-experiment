@@ -1,144 +1,19 @@
-import { JsonPipe } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  Signal,
-  TemplateRef,
-  viewChild,
-} from '@angular/core';
-import {
-  Column,
-  ColumnDef,
-  createAngularTable,
-  FlexRenderDirective,
-  getCoreRowModel,
-  getSortedRowModel,
-  HeaderContext,
-} from '@tanstack/angular-table';
-import { TodoModel } from '../models/todo.model';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TodoListStore } from '../stores/todo-list.store';
 import { TodoForm } from './todo-form';
-
-const defaultColumns = (
-  taskCellTemplate: Signal<TemplateRef<any>>,
-): ColumnDef<TodoModel>[] =>
-  [
-    {
-      accessorKey: 'done',
-      header: 'Done',
-      sortingFn: 'basic',
-      cell: () => taskCellTemplate(),
-    },
-    {
-      header: 'Task',
-      accessorFn: ({ name, description }) => ({ name, description }),
-      cell: (task) => {
-        const currentTask = task.getValue();
-
-        if (!isTaskDescription(currentTask)) {
-          return `<i class="text-sm text-neutral-500">No Task Found!</i>`;
-        }
-
-        return `<b>${currentTask.name}</b><br>
-<i class="text-sm text-neutral-500">${currentTask.description}</i>`;
-      },
-      enableSorting: false,
-    },
-    {
-      accessorKey: 'taskImportance',
-      header: 'Importance',
-      sortingFn: 'basic',
-    },
-    {
-      accessorKey: 'randomNumber',
-      header: 'Random',
-      sortingFn: 'basic',
-    },
-  ] as const;
+import { TodoTable } from './todo-table';
 
 @Component({
   selector: 'app-todo',
-  imports: [FlexRenderDirective, TodoForm, JsonPipe],
-  template: ` <div>
-      <table class="table table-zebra table-pin-rows">
-        <thead>
-          @for (headerGroup of table.getHeaderGroups(); track headerGroup.id) {
-            <tr>
-              @for (header of headerGroup.headers; track header.id) {
-                @if (!header.isPlaceholder) {
-                  @if (header.column.getCanSort()) {
-                    <th
-                      class="cursor-pointer hover:bg-accent/10 transition-all duration-500 ease-in-out"
-                      (click)="sortBy(header.column)"
-                    >
-                      <ng-container
-                        *flexRender="
-                          header.column.columnDef.header;
-                          props: header.getContext();
-                          let header
-                        "
-                      >
-                        <div [innerHTML]="header"></div>
-                      </ng-container>
-                    </th>
-                  } @else {
-                    <th>
-                      <ng-container
-                        *flexRender="
-                          header.column.columnDef.header;
-                          props: header.getContext();
-                          let header
-                        "
-                      >
-                        <div [innerHTML]="header"></div>
-                      </ng-container>
-                    </th>
-                  }
-                }
-              }
-            </tr>
-          }
-        </thead>
-        <tbody>
-          @for (row of table.getRowModel().rows; track row.id) {
-            <tr
-              class="cursor-pointer hover:bg-secondary/25 hover:text-secondary-content transition-all duration-500 ease-in-out"
-              (click)="handleTodoClick(row.original)"
-            >
-              @for (cell of row.getVisibleCells(); track cell.id) {
-                <td>
-                  <ng-container
-                    *flexRender="
-                      cell.column.columnDef.cell;
-                      props: cell.getContext();
-                      let cell
-                    "
-                  >
-                    <div [innerHTML]="cell"></div>
-                  </ng-container>
-                </td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+  imports: [TodoForm, TodoTable],
+  standalone: true,
+  template: ` <app-todo-table />
     <hr />
     @if (store.todoSelected()) {
       @defer {
         <app-todo-form />
       }
-    }
-    <ng-template #taskCheckbox let-context>
-      <input
-        class="checkbox checkbox-success"
-        [checked]="context.getValue()"
-        (change)="changeChecked(context.row.original)"
-        (click)="$event.stopPropagation()"
-        type="checkbox"
-      />
-    </ng-template>`,
+    }`,
   styles: ``,
   host: {
     class: 'block ml-2 p-1',
@@ -148,48 +23,4 @@ const defaultColumns = (
 })
 export class Todo {
   protected readonly store = inject(TodoListStore);
-
-  protected readonly taskCheckbox =
-    viewChild.required<TemplateRef<{ $implicit: HeaderContext<any, any> }>>(
-      'taskCheckbox',
-    );
-
-  protected readonly table = createAngularTable(() => ({
-    data: this.store.todos(),
-    columns: defaultColumns(this.taskCheckbox),
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    debugTable: true,
-  }));
-
-  protected handleTodoClick(todo: TodoModel) {
-    this.store.selectTodo(todo);
-  }
-
-  protected sortBy(column: Column<TodoModel>) {
-    column.toggleSorting();
-
-    console.log('sorting by', column.id, this.table.getState().sorting);
-  }
-
-  // From Oleh
-  // https://stackblitz.com/github/tanstack/table/tree/main/examples/angular/editable?embed=1&theme=light&preset=node&file=src/app/app.component.ts
-  // https://tanstack.com/table/v8/docs/framework/angular/examples/editable?panel=sandbox
-
-  protected changeChecked(currentTodo: TodoModel) {
-    console.log('changeChecked', currentTodo);
-
-    this.store.toggleTodo(currentTodo);
-  }
-}
-
-function isTaskDescription(
-  value: unknown,
-): value is { name: string; description: string } {
-  return (
-    typeof value === 'object' &&
-    value != null &&
-    Object.hasOwn(value, 'name') &&
-    Object.hasOwn(value, 'description')
-  );
 }
