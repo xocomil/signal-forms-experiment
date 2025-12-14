@@ -17,6 +17,7 @@ import {
 } from '@tanstack/angular-table';
 import { TodoModel } from '../models/todo.model';
 import { TodoListStore } from '../stores/todo-list.store';
+import { HeaderDirectionPipe } from './headerDirection-pipe';
 
 const defaultColumns = (
   taskCellTemplate: Signal<TemplateRef<any>>,
@@ -57,7 +58,7 @@ const defaultColumns = (
 
 @Component({
   selector: 'app-todo-table',
-  imports: [FlexRenderDirective],
+  imports: [FlexRenderDirective, HeaderDirectionPipe],
   standalone: true,
   template: `
     <table class="table table-zebra table-pin-rows">
@@ -75,10 +76,15 @@ const defaultColumns = (
                       *flexRender="
                         header.column.columnDef.header;
                         props: header.getContext();
-                        let header
+                        let headerContent
                       "
                     >
-                      <div [innerHTML]="header"></div>
+                      <div class="flex flex-row gap-1">
+                        <div [innerHTML]="headerContent"></div>
+                        <div class="text-primary text-right">
+                          {{ header.column | headerDirection }}
+                        </div>
+                      </div>
                     </ng-container>
                   </th>
                 } @else {
@@ -87,10 +93,10 @@ const defaultColumns = (
                       *flexRender="
                         header.column.columnDef.header;
                         props: header.getContext();
-                        let header
+                        let headerContent
                       "
                     >
-                      <div [innerHTML]="header"></div>
+                      <div [innerHTML]="headerContent"></div>
                     </ng-container>
                   </th>
                 }
@@ -111,10 +117,10 @@ const defaultColumns = (
                   *flexRender="
                     cell.column.columnDef.cell;
                     props: cell.getContext();
-                    let cell
+                    let cellContent
                   "
                 >
-                  <div [innerHTML]="cell"></div>
+                  <div [innerHTML]="cellContent"></div>
                 </ng-container>
               </td>
             }
