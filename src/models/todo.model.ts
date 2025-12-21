@@ -38,7 +38,15 @@ export type TodoModel = z.infer<typeof todoParser>;
 
 export type TodoModelKeys = keyof TodoModel;
 
-export const NonEditableKeys: TodoModelKeys[] = ['id'] as const;
+export const NonEditableKeys = ['id'] as const;
+export type NonEditableKey = (typeof NonEditableKeys)[number];
+
+export type EditableTodoModel = Omit<TodoModel, NonEditableKey>;
+export type EditableKey = keyof EditableTodoModel;
+
+export function isNonEditableKey(key: TodoModelKeys): key is NonEditableKey {
+  return NonEditableKeys.includes(key as NonEditableKey);
+}
 
 export const todoSchema = schema<TodoModel>((form) => {
   validateStandardSchema(form, todoParser);
@@ -80,4 +88,15 @@ export function todoFactory(opts: Partial<TodoModel> = {}): TodoModel {
     taskImportance,
     createDate,
   };
+}
+
+const taskDescriptionSchema = todoParser.pick({
+  name: true,
+  description: true,
+});
+
+export type TaskDescription = z.infer<typeof taskDescriptionSchema>;
+
+export function isTaskDescription(value: unknown): value is TaskDescription {
+  return taskDescriptionSchema.safeParse(value).success;
 }

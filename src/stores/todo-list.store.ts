@@ -9,7 +9,8 @@ import {
 import { create } from 'mutative';
 import { todoListFactory } from '../models/todo-list.model';
 import {
-  NonEditableKeys,
+  EditableTodoModel,
+  isNonEditableKey,
   TodoModel,
   TodoModelKeys,
 } from '../models/todo.model';
@@ -75,7 +76,7 @@ export const TodoListStore = signalStore(
 function createDelta(
   currentTodo: TodoModel,
   newTodo: TodoModel,
-): Partial<TodoModel> {
+): Partial<EditableTodoModel> {
   // Example of using reduce
   // const delta = Object.entries(newTodo).reduce((acc, [key, value]) => {
   //   return currentTodo[key] !== value ? { ...acc, [key]: value } : acc;
@@ -85,7 +86,7 @@ function createDelta(
 
   // Example of not using reduce
   const delta2 = Object.entries(newTodo).filter(([key, value]) => {
-    if (NonEditableKeys.includes(key as TodoModelKeys)) return false;
+    if (isNonEditableKey(key as TodoModelKeys)) return false;
 
     return currentTodo[key] !== value;
   });

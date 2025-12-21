@@ -15,7 +15,7 @@ import {
   getSortedRowModel,
   HeaderContext,
 } from '@tanstack/angular-table';
-import { TodoModel } from '../models/todo.model';
+import { isTaskDescription, TodoModel } from '../models/todo.model';
 import { TodoListStore } from '../stores/todo-list.store';
 import { HeaderDirectionPipe } from './headerDirection-pipe';
 
@@ -171,15 +171,4 @@ export class TodoTable {
   protected changeChecked(currentTodo: TodoModel) {
     this.#store.toggleTodo(currentTodo);
   }
-}
-
-function isTaskDescription(
-  value: unknown,
-): value is { name: string; description: string } {
-  return (
-    typeof value === 'object' &&
-    value != null &&
-    Object.hasOwn(value, 'name') &&
-    Object.hasOwn(value, 'description')
-  );
 }
