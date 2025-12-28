@@ -49,7 +49,9 @@ export const TodoListStore = signalStore(
 
           console.log('[toggleTodo] index', index, draft.todos[index]);
 
-          draft.todos[index].done = !todoToToggle.done;
+          if (index !== -1) {
+            draft.todos[index].done = !todoToToggle.done;
+          }
         }),
       );
     },
@@ -64,11 +66,35 @@ export const TodoListStore = signalStore(
             (todo) => todo.id === draft.selectedTodo?.id,
           );
 
-          draft.todos[index] = { ...draft.todos[index], ...delta };
+          if (index !== -1) {
+            draft.todos[index] = { ...draft.todos[index], ...delta };
+          }
         }),
       );
 
       store.deselectTodo();
+    },
+    addTodo(todo: TodoModel) {
+      patchState(store, (state) =>
+        create(state, (draft) => {
+          draft.todos.push(todo);
+        }),
+      );
+    },
+    deleteTodo(todoToDelete: TodoModel) {
+      store.deselectTodo();
+
+      patchState(store, (state) =>
+        create(state, (draft) => {
+          const index = state.todos.findIndex(
+            (todo) => todo.id === todoToDelete.id,
+          );
+
+          if (index !== -1) {
+            draft.todos.splice(index, 1);
+          }
+        }),
+      );
     },
   })),
 );
