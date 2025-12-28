@@ -32,10 +32,8 @@ export class Todo {
   protected readonly store = inject(TodoListStore);
 
   protected addNewTodo() {
-    const todos = this.store.todos();
-    const maxId = todos.reduce((max, todo) => Math.max(max, todo.id), 0);
     const newTodo = todoFactory({
-      id: maxId + 1,
+      id: this.store.nextId(),
       name: '',
       description: '',
       done: false,

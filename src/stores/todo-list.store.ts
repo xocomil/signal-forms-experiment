@@ -25,7 +25,14 @@ export const TodoListStore = signalStore(
     selectedTodo: undefined,
   }),
   withComputed((store) => ({
+    maxId: computed(() => {
+      const todos = store.todos();
+      return todos.reduce((max, todo) => Math.max(max, todo.id), 0);
+    }),
     todoSelected: computed(() => store.selectedTodo()),
+  })),
+  withComputed((store) => ({
+    nextId: computed(() => store.maxId() + 1),
   })),
   withMethods((store) => ({
     selectTodo(todo: TodoModel) {
