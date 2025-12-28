@@ -11,6 +11,7 @@ import { todoListFactory } from '../models/todo-list.model';
 import {
   EditableTodoModel,
   isNonEditableKey,
+  todoFactory,
   TodoModel,
   TodoModelKeys,
 } from '../models/todo.model';
@@ -102,6 +103,18 @@ export const TodoListStore = signalStore(
           }
         }),
       );
+    },
+  })),
+  withMethods((store) => ({
+    createAndSelectNewTodo() {
+      const newTodo = todoFactory({
+        id: store.nextId(),
+        name: '',
+        description: '',
+      });
+
+      store.addTodo(newTodo);
+      store.selectTodo(newTodo);
     },
   })),
 );

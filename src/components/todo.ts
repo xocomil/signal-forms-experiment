@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { todoFactory } from '../models/todo.model';
 import { TodoListStore } from '../stores/todo-list.store';
 import { TodoForm } from './todo-form';
 import { TodoTable } from './todo-table';
@@ -32,16 +31,6 @@ export class Todo {
   protected readonly store = inject(TodoListStore);
 
   protected addNewTodo() {
-    const newTodo = todoFactory({
-      id: this.store.nextId(),
-      name: '',
-      description: '',
-      done: false,
-      randomNumber: 150,
-      taskImportance: 0,
-    });
-
-    this.store.addTodo(newTodo);
-    this.store.selectTodo(newTodo);
+    this.store.createAndSelectNewTodo();
   }
 }

@@ -56,6 +56,16 @@ const defaultColumns = (
       sortingFn: 'basic',
     },
     {
+      accessorKey: 'dueDate',
+      header: 'Due Date',
+      cell: (cell) => {
+        const date = cell.getValue() as Date | undefined;
+        if (!date) return '<i class="text-sm text-neutral-500">No due date</i>';
+        return new Date(date).toLocaleDateString();
+      },
+      sortingFn: 'datetime',
+    },
+    {
       id: 'actions',
       header: 'Actions',
       cell: () => actionsCellTemplate(),
