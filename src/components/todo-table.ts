@@ -21,6 +21,7 @@ import { HeaderDirectionPipe } from './headerDirection-pipe';
 
 const defaultColumns = (
   taskCellTemplate: Signal<TemplateRef<any>>,
+  actionsCellTemplate: Signal<TemplateRef<any>>,
 ): ColumnDef<TodoModel>[] =>
   [
     {
@@ -53,6 +54,22 @@ const defaultColumns = (
       accessorKey: 'randomNumber',
       header: 'Random',
       sortingFn: 'basic',
+    },
+    {
+      accessorKey: 'dueDate',
+      header: 'Due Date',
+      cell: (cell) => {
+        const date = cell.getValue() as Date | undefined;
+        if (!date) return '<i class="text-sm text-neutral-500">No due date</i>';
+        return new Date(date).toLocaleDateString();
+      },
+      sortingFn: 'datetime',
+    },
+    {
+      id: 'actions',
+      header: 'Actions',
+      cell: () => actionsCellTemplate(),
+      enableSorting: false,
     },
   ] as const;
 
@@ -137,6 +154,16 @@ const defaultColumns = (
         type="checkbox"
       />
     </ng-template>
+    <ng-template #actionsCell let-context>
+      <button
+        class="btn btn-sm btn-error btn-outline"
+        (click)="handleDelete(context.row.original, $event)"
+        type="button"
+        aria-label="Delete todo"
+      >
+        🗑️
+      </button>
+    </ng-template>
   `,
   styles: ``,
   host: {
@@ -152,9 +179,14 @@ export class TodoTable {
       'taskCheckbox',
     );
 
+  protected readonly actionsCell =
+    viewChild.required<TemplateRef<{ $implicit: HeaderContext<any, any> }>>(
+      'actionsCell',
+    );
+
   protected readonly table = createAngularTable(() => ({
     data: this.#store.todos(),
-    columns: defaultColumns(this.taskCheckbox),
+    columns: defaultColumns(this.taskCheckbox, this.actionsCell),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
@@ -170,5 +202,10 @@ export class TodoTable {
 
   protected changeChecked(currentTodo: TodoModel) {
     this.#store.toggleTodo(currentTodo);
+  }
+
+  protected handleDelete(todo: TodoModel, event: Event) {
+    event.stopPropagation();
+    this.#store.deleteTodo(todo);
   }
 }

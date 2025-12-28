@@ -32,6 +32,7 @@ export const todoParser = z.object({
     .min(0, 'Minimum task importance is 0.')
     .max(5, 'Maximum task importance is 5.'),
   createDate: z.date().nonoptional('Please provide a created date.'),
+  dueDate: z.coerce.date().optional(),
 });
 
 export type TodoModel = z.infer<typeof todoParser>;
@@ -69,6 +70,9 @@ export const todoSchema = schema<TodoModel>((form) => {
 });
 
 export function todoFactory(opts: Partial<TodoModel> = {}): TodoModel {
+  const oneWeekFromNow = new Date();
+  oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+
   const {
     done = false,
     name = 'Learn Signal Forms',
@@ -77,6 +81,7 @@ export function todoFactory(opts: Partial<TodoModel> = {}): TodoModel {
     randomNumber = 42,
     taskImportance = 3,
     createDate = new Date(),
+    dueDate = oneWeekFromNow,
   } = opts;
 
   return {
@@ -87,6 +92,7 @@ export function todoFactory(opts: Partial<TodoModel> = {}): TodoModel {
     randomNumber,
     taskImportance,
     createDate,
+    dueDate,
   };
 }
 

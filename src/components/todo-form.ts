@@ -6,6 +6,7 @@ import {
   linkedSignal,
 } from '@angular/core';
 import { Field, form } from '@angular/forms/signals';
+import { DatePicker } from '../controls/date-picker';
 import { Input } from '../controls/input';
 import { RandomNumber } from '../controls/random-number';
 import { StarInput } from '../controls/star-input';
@@ -16,6 +17,7 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
 @Component({
   selector: 'app-todo-form',
   imports: [
+    DatePicker,
     Input,
     ProjectedInput,
     ProjectedInputStyles,
@@ -67,6 +69,12 @@ import { ProjectedInput, ProjectedInputStyles } from './projected-input';
         [field]="form.description"
         label="Description"
         placeholder="Describe your task"
+      />
+      <app-date-picker
+        class="col-span-6"
+        [field]="form.dueDate"
+        label="Due Date"
+        placeholder="Select a due date"
       />
       <div class="col-span-6 flex justify-end gap-4">
         <button class="btn" (click)="cancel()" type="button">Cancel</button>
