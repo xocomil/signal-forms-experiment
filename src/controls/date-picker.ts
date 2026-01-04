@@ -4,14 +4,15 @@ import {
   computed,
   input,
 } from '@angular/core';
-import { Field, FieldTree } from '@angular/forms/signals';
+import { FieldTree } from '@angular/forms/signals';
+import { HlmDatePickerImports } from '@spartan-ng/date-picker';
 
 @Component({
   selector: 'app-date-picker',
-  imports: [Field],
+  imports: [HlmDatePickerImports],
   template: `
     <div class="form-control">
-      <label class="label" [attr.for]="inputId()">
+      <!-- <label class="label" [attr.for]="inputId()">
         <span class="label-text">{{ label() }}</span>
         @if (field().value()) {
           <button
@@ -33,8 +34,12 @@ import { Field, FieldTree } from '@angular/forms/signals';
         [placeholder]="placeholder()"
         (input)="handleInput($event)"
         type="date"
-      />
+      /> -->
     </div>
+
+    <hlm-date-picker>
+      <span>Select date</span>
+    </hlm-date-picker>
   `,
   styles: ``,
   host: {
