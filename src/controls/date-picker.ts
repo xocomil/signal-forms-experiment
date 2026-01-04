@@ -1,17 +1,19 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   input,
+  linkedSignal,
 } from '@angular/core';
-import { Field, FieldTree } from '@angular/forms/signals';
+import { FieldTree } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-date-picker',
-  imports: [Field],
+  imports: [],
   template: `
+    @let field = this.field();
+
     <div class="form-control">
-      <label class="label" [attr.for]="inputId()">
+      <label class="label" [attr.for]="field().name()">
         <span class="label-text">{{ label() }}</span>
         @if (field().value()) {
           <button
@@ -27,9 +29,8 @@ import { Field, FieldTree } from '@angular/forms/signals';
       </label>
       <input
         class="input input-bordered w-full"
-        [id]="inputId()"
-        [class.input-error]="field().hasError()"
-        [field]="field"
+        [class.input-error]="field().invalid()"
+        [value]="displayValue()"
         [placeholder]="placeholder()"
         (input)="handleInput($event)"
         type="date"
@@ -43,39 +44,46 @@ import { Field, FieldTree } from '@angular/forms/signals';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePicker {
-  readonly field = input.required<FieldTree<Date | undefined>>();
+  readonly field = input.required<FieldTree<Date | ''>>();
 
   label = input('Due Date');
   placeholder = input('Select a date');
 
-  protected inputId = computed(
-    () => `date-picker-${Math.random().toString(36).substr(2, 9)}`,
-  );
+  protected readonly displayValue = linkedSignal<string>(() => {
+    const value = this.field()().value();
 
-  // protected dateString = computed(() => {
-  //   const date = this.field().value();
-  //   if (!date) return '';
+    console.log('display value changed', value);
 
-  //   // Convert Date to YYYY-MM-DD format for input[type="date"]
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, '0');
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // });
+    if (!value) return '';
+
+    return this.dateString(value);
+  });
+
+  protected dateString(dateValue: Date | '') {
+    if (!dateValue) return '';
+
+    const year = dateValue.getFullYear();
+    const month = String(dateValue.getMonth() + 1).padStart(2, '0');
+    const day = String(dateValue.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
 
   protected handleInput(event: Event) {
-    //   const input = event.target as HTMLInputElement;
-    //   const dateString = input.value;
-    //   if (!dateString) {
-    //     this.field().value.set(undefined);
-    //     return;
-    //   }
-    //   // Parse YYYY-MM-DD format from input[type="date"]
-    //   const date = new Date(dateString + 'T00:00:00');
-    //   this.field().value.set(date);
+    const input = event.target as HTMLInputElement;
+    const dateString = input.value;
+
+    if (!dateString) {
+      this.field()().value.set('');
+      return;
+    }
+
+    // Parse YYYY-MM-DD format from input[type="date"]
+    const date = new Date(dateString + 'T00:00:00');
+    this.field()().value.set(date);
   }
 
   protected clearDate() {
-    //   this.field().value.set(undefined);
+    this.field()().value.set('');
   }
 }
