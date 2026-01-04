@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { Field, FieldTree } from '@angular/forms/signals';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  linkedSignal,
+} from '@angular/core';
+import { FieldTree } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-date-picker',
-  imports: [Field],
+  imports: [],
   template: `
     @let field = this.field();
 
@@ -25,8 +30,9 @@ import { Field, FieldTree } from '@angular/forms/signals';
       <input
         class="input input-bordered w-full"
         [class.input-error]="field().invalid()"
-        [field]="field"
+        [value]="displayValue()"
         [placeholder]="placeholder()"
+        (input)="handleInput($event)"
         type="date"
       />
     </div>
@@ -38,35 +44,46 @@ import { Field, FieldTree } from '@angular/forms/signals';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePicker {
-  readonly field = input.required<FieldTree<Date | undefined>>();
+  readonly field = input.required<FieldTree<Date | ''>>();
 
   label = input('Due Date');
   placeholder = input('Select a date');
 
-  // protected dateString = computed(() => {
-  //   const date = this.field().value();
-  //   if (!date) return '';
+  protected readonly displayValue = linkedSignal<string>(() => {
+    const value = this.field()().value();
 
-  //   // Convert Date to YYYY-MM-DD format for input[type="date"]
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, '0');
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // });
+    console.log('display value changed', value);
+
+    if (!value) return '';
+
+    return this.dateString(value);
+  });
+
+  protected dateString(dateValue: Date | '') {
+    if (!dateValue) return '';
+
+    const year = dateValue.getFullYear();
+    const month = String(dateValue.getMonth() + 1).padStart(2, '0');
+    const day = String(dateValue.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
 
   protected handleInput(event: Event) {
-    //   const input = event.target as HTMLInputElement;
-    //   const dateString = input.value;
-    //   if (!dateString) {
-    //     this.field().value.set(undefined);
-    //     return;
-    //   }
-    //   // Parse YYYY-MM-DD format from input[type="date"]
-    //   const date = new Date(dateString + 'T00:00:00');
-    //   this.field().value.set(date);
+    const input = event.target as HTMLInputElement;
+    const dateString = input.value;
+
+    if (!dateString) {
+      this.field()().value.set('');
+      return;
+    }
+
+    // Parse YYYY-MM-DD format from input[type="date"]
+    const date = new Date(dateString + 'T00:00:00');
+    this.field()().value.set(date);
   }
 
   protected clearDate() {
-    //   this.field().value.set(undefined);
+    this.field()().value.set('');
   }
 }
