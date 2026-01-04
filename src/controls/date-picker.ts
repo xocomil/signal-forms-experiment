@@ -1,17 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Field, FieldTree } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-date-picker',
   imports: [Field],
   template: `
+    @let field = this.field();
+
     <div class="form-control">
-      <label class="label" [attr.for]="inputId()">
+      <label class="label" [attr.for]="field().name()">
         <span class="label-text">{{ label() }}</span>
         @if (field().value()) {
           <button
@@ -27,8 +24,7 @@ import { Field, FieldTree } from '@angular/forms/signals';
       </label>
       <input
         class="input input-bordered w-full"
-        [id]="inputId()"
-        [class.input-error]="field().hasError()"
+        [class.input-error]="field().invalid()"
         [field]="field"
         [placeholder]="placeholder()"
         (input)="handleInput($event)"
@@ -47,10 +43,6 @@ export class DatePicker {
 
   label = input('Due Date');
   placeholder = input('Select a date');
-
-  protected inputId = computed(
-    () => `date-picker-${Math.random().toString(36).substr(2, 9)}`,
-  );
 
   // protected dateString = computed(() => {
   //   const date = this.field().value();
