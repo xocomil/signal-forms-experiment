@@ -27,7 +27,6 @@ import { Field, FieldTree } from '@angular/forms/signals';
         [class.input-error]="field().invalid()"
         [field]="field"
         [placeholder]="placeholder()"
-        (input)="handleInput($event)"
         type="date"
       />
     </div>
