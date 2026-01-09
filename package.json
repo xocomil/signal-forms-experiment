@@ -30,7 +30,7 @@
     "@analogjs/vitest-angular": "2.2.0",
     "@angular-devkit/core": "21.0.4",
     "@angular-devkit/schematics": "21.0.4",
-    "@angular/aria": "21.0.5",
+    "@angular/aria": "21.0.6",
     "@angular/build": "21.0.4",
     "@angular/cli": "21.0.4",
     "@angular/compiler-cli": "21.0.6",
