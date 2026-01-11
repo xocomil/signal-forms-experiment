@@ -1,4 +1,8 @@
-import { withImmutableState } from '@angular-architects/ngrx-toolkit';
+import {
+  withDevtools,
+  withImmutableState,
+  withStorageSync,
+} from '@angular-architects/ngrx-toolkit';
 import { computed } from '@angular/core';
 import {
   patchState,
@@ -12,6 +16,7 @@ import {
   EditableTodoModel,
   isNonEditableKey,
   todoFactory,
+  todoListParser,
   TodoModel,
   TodoModelKeys,
 } from '../models/todo.model';
@@ -21,6 +26,15 @@ type SelectedState = {
 };
 
 export const TodoListStore = signalStore(
+  withDevtools('todo-list-experiment'),
+  withStorageSync({
+    key: 'todo-list-experiment',
+    parse: (storedObject) => {
+      const parsedObject = JSON.parse(storedObject);
+
+      return todoListParser.parse(parsedObject);
+    },
+  }),
   withImmutableState(todoListFactory()),
   withImmutableState<SelectedState>({
     selectedTodo: undefined,
