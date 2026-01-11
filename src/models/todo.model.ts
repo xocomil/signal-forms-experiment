@@ -35,6 +35,22 @@ export const todoParser = z.object({
   dueDate: z.coerce.date().optional(),
 });
 
+// Parser for deserializing from storage (handles date strings)
+export const todoStorageParser = todoParser.extend({
+  createDate: z.preprocess(
+    (val) => (typeof val === 'string' ? new Date(val) : val),
+    z.date().nonoptional('Please provide a created date.'),
+  ),
+  dueDate: z.preprocess((val) => {
+    if (!val) return undefined;
+    return typeof val === 'string' ? new Date(val) : val;
+  }, z.date().optional()),
+});
+
+export const todoListParser = z.object({
+  todos: z.array(todoStorageParser),
+});
+
 export type TodoModel = z.infer<typeof todoParser>;
 
 export type TodoModelKeys = keyof TodoModel;
@@ -62,6 +78,7 @@ export const todoSchema = schema<TodoModel>((form) => {
     form.randomNumber,
     form.name,
     form.taskImportance,
+    form.dueDate,
   ];
 
   for (const field of fields) {
