@@ -26,8 +26,8 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@analogjs/vite-plugin-angular": "2.2.1",
-    "@analogjs/vitest-angular": "2.2.1",
+    "@analogjs/vite-plugin-angular": "2.2.2",
+    "@analogjs/vitest-angular": "2.2.2",
     "@angular-devkit/core": "21.0.5",
     "@angular-devkit/schematics": "21.0.5",
     "@angular/aria": "21.0.6",
