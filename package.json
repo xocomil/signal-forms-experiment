@@ -63,7 +63,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-playwright": "^2.4.1",
     "jiti": "2.6.1",
-    "jsdom": "~22.1.0",
+    "jsdom": "~27.4.0",
     "ng-primitives": "0.100.0",
     "nx": "22.3.3",
     "postcss": "^8.5.6",
